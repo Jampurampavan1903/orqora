@@ -1,35 +1,24 @@
 import os
-from pathlib import Path
 
 from openai import OpenAI
-from dotenv import load_dotenv
-
-env_path = Path(__file__).resolve().parent.parent / ".env"
-load_dotenv(dotenv_path=env_path)
 
 client = OpenAI(
     api_key=os.getenv("GROQ_API_KEY"),
     base_url="https://api.groq.com/openai/v1"
 )
 
-
-def planner_agent(task: str):
-
-    prompt = f"""
-    You are an AI planning agent.
-
-    Break the following task into detailed execution steps.
-
-    Task:
-    {task}
-    """
+def summarizer_agent(task: str):
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
             {
+                "role": "system",
+                "content": "You summarize complex AI outputs clearly."
+            },
+            {
                 "role": "user",
-                "content": prompt
+                "content": task
             }
         ]
     )
