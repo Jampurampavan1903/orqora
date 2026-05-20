@@ -1,3 +1,6 @@
+import Link from "next/link"
+
+
 async function getTraces() {
 
   const response = await fetch(
@@ -27,32 +30,38 @@ export default async function Home() {
 
         {traces.map((trace: any) => (
 
-          <div
+          <Link
+            href={`/trace/${trace.trace_id}`}
             key={trace.trace_id}
-            className="border border-gray-800 rounded-xl p-6 bg-zinc-900"
           >
 
-            <h2 className="text-2xl font-semibold mb-2">
-              {trace.task}
-            </h2>
+            <div
+              className="border border-gray-800 rounded-xl p-6 bg-zinc-900 hover:bg-zinc-800 transition"
+            >
 
-            <p className="text-sm text-gray-400 mb-2">
-              Trace ID: {trace.trace_id}
-            </p>
+              <h2 className="text-2xl font-semibold mb-2">
+                {trace.task}
+              </h2>
 
-            <p className="text-sm text-gray-400 mb-2">
-              Agent: {trace.agent}
-            </p>
+              <p className="text-sm text-gray-400 mb-2">
+                Trace ID: {trace.trace_id}
+              </p>
 
-            <p className="text-sm text-gray-400 mb-2">
-              Duration: {trace.duration_seconds.toFixed(2)}s
-            </p>
+              <p className="text-sm text-gray-400 mb-2">
+                Agent: {trace.agent}
+              </p>
 
-            <p className="text-sm text-gray-400">
-              Started: {trace.start_time}
-            </p>
+              <p className="text-sm text-gray-400 mb-2">
+                Duration: {trace.duration_seconds.toFixed(2)}s
+              </p>
 
-          </div>
+              <p className="text-sm text-gray-400">
+                Started: {trace.start_time}
+              </p>
+
+            </div>
+
+          </Link>
 
         ))}
 
